@@ -103,36 +103,69 @@
     <div class="wrapper">
       <div class="section">
         <h1>Todo List</h1>
-        <input type="text" placeholder="새 작업 입력" />
-        <button>작업 추가</button>
+        <input type="text" placeholder="새 작업 입력" class="newTask" />
+        <button class="taskButton">작업 추가</button>
         <ul class="todoList">
           <li>
-            <input type="checkbox" name="" id="check1" />
-            <label for="check1">할일1</label>
-            <button>삭제</button>
-          </li>
-          <li>
-            <input type="checkbox" name="" id="check2" />
-            <label for="check1">ㅇㅇㅇㅇㅇ</label>
-            <button>삭제</button>
-          </li>
-          <li>
-            <input type="checkbox" name="" id="check3" />
-            <label for="check1">ㅇㅇㅇㅇㅇ</label>
-            <button>삭제</button>
-          </li>
-          <li>
-            <input type="checkbox" name="" id="check4" />
-            <label for="check1">ㅇㅇㅇㅇㅇ</label>
-            <button>삭제</button>
-          </li>
-          <li>
-            <input type="checkbox" name="" id="check5" />
-            <label for="check1">ㅇㅇㅇㅇㅇ</label>
-            <button>삭제</button>
+            <input type="checkbox" name="0" id="check1" />
+            <label for="check1">청소하기</label>
+            <button class="deleteButton">삭제</button>
           </li>
         </ul>
       </div>
     </div>
   </body>
+  <script>
+    /*
+     // 1. 버튼 dom을 잡는다 (선언)
+     const taskButton = document.querySelector(".taskButton");
+     // 2. 인풋 dom을 잡는다 (선언)
+     const newTask = document.querySelector(".newTask");
+      3. 버튼에 click 이벤트를 추가하고, 실행할 횟수를 연결한다
+        4. 함수가 실행될 떄 input의 값을 얻는다
+        5. 버튼을 누를때마다 콘솔에 input 값을 찍는다
+
+     todoButton.addEventListener("click", function () {
+       console.log(newTask.value);
+     });
+
+     */
+
+    number = 0;
+    // 추가버튼 dom을 잡는다 (선언)
+    const taskButton = document.querySelector(".taskButton");
+    // 인풋 dom을 잡는다 (선언)
+    const newTask = document.querySelector(".newTask");
+    // ul(전체 요소) dom을 잡는다 (선언)
+    const todoList = document.querySelector(".todoList");
+    // 삭제버튼 dom을 잡는다 (선언)
+    const deleteButton = document.querySelector(".deleteButton");
+
+    // 1) 할일 추가 : 추가버튼에 클릭 이벤트를 추가한다.
+    taskButton.addEventListener("click", () => {
+      // 작업 입력값이 빈값이 아니라면,
+      if (newTask.value !== "") {
+        // li태그를 만든다
+        const addTask = document.createElement("li");
+        // id번호 1씩 증가
+        number++;
+        // li태그로 만든 addTask에 자식 태그들 추가
+        addTask.innerHTML = `
+        <input type="checkbox" name=${number} id="check${number}" /><label for="check${number}">${newTask.value}
+          </label><button class="deleteButton">삭제</button>`;
+        // todoList(전체 요소)에 자식 태그인 addTask 추가
+        todoList.appendChild(addTask);
+        // 작업 입력값 초기화(=빈 값 세팅)
+        newTask.value = "";
+      } else {
+        console.log("새할일을 입력해주세요.");
+      }
+    });
+
+    // 2) 할일 삭제 : 삭제버튼에 클릭 이벤트를 추가한다.
+    deleteButton.addEventListener("click", () => {
+      const name = document.getElementsByName(`${number}`);
+      todoList.removeChild(todoList.children[name[0]["name"]]);
+    });
+  </script>
 </html>
